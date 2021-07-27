@@ -1,10 +1,10 @@
 import EmailListEntry from './EmailListEntry.js';
 
-function EmailList({emails, callback}) {
+function EmailList({emails, emailClicked}) {
     return (
       <div className="email-list">
         {emails.map(email => (
-          <EmailListEntry key={email.id} email={email} callback={callback} />
+          <EmailListEntry key={email.id} email={email} emailClicked={emailClicked} />
         ))}
       </div>
     );

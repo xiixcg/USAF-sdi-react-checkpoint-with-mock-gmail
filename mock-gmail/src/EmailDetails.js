@@ -1,13 +1,24 @@
-function EmailDetails({email}) {
+import Button from 'react-bootstrap/Button';
+
+function EmailDetails({ email, toggleEmailDetails, backButtonClicked }) {
+  if (email !== null) {
     return (
-      <div className="email-details">
-          <h3>{email.subject}</h3>
-          <p>Sender: {email.sender}</p>
-          <p>Recipient: {email.recipient}</p>
-          <p>Date Recieved: {email.date}</p>
-          <p>Message: {email.message}</p>
+      <div id="email-details" display={toggleEmailDetails(email)}>
+        <Button onClick={() => { backButtonClicked() }}>
+          Back
+        </Button>
+        <h3>{email.subject}</h3>
+        <p>Sender: {email.sender}</p>
+        <p>Recipient: {email.recipient}</p>
+        <p>Date Recieved: {email.date}</p>
+        <p>Message: {email.message}</p>
       </div>
     );
   }
 
-  export default EmailDetails;
+  return (
+    <div className="email-details" display={toggleEmailDetails(email)}></div>
+  )
+}
+
+export default EmailDetails;

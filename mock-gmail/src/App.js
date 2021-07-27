@@ -12,7 +12,7 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      currentEmail: {},
+      currentEmail: null,
       emailList: [],
       searchEmailList: null
     }
@@ -37,14 +37,26 @@ class App extends React.Component {
     this.setState({ currentEmail: email });
   }
 
+  toggleEmailDetails() {
+    if (this.state.currentEmail === null) {
+      return "none";
+    }
+
+    return "block";
+  }
+
+  backButtonClicked() {
+    this.setState({ currentEmail: null });
+  }
+
   searchClicked(emails, searchTarget) {
     let foundEmailList = emails.filter(email => email.subject.toUpperCase().includes(searchTarget.toUpperCase()));
-    this.setState({searchEmailList : foundEmailList});
+    this.setState({ searchEmailList: foundEmailList });
   }
 
   searchValueChanged(searchTarget) {
     if (!searchTarget.trim()) {
-      this.setState({searchEmailList : null});
+      this.setState({ searchEmailList: null });
     }
   }
 
@@ -55,13 +67,13 @@ class App extends React.Component {
           <Row>
             <Search emails={this.state.emailList} searchClicked={this.searchClicked.bind(this)} searchValueChanged={this.searchValueChanged.bind(this)} />
           </Row>
-          <EmailDetails email={this.state.currentEmail} />
+          <EmailDetails email={this.state.currentEmail} toggleEmailDetails={this.toggleEmailDetails.bind(this)} backButtonClicked={this.backButtonClicked.bind(this)} />
           <Row id="table-title">
             <Col md={3}>Sender</Col>
             <Col md={6}>Subject</Col>
             <Col md={3}>Date Received</Col>
           </Row>
-          <EmailList emails={this.getEmails()} callback={this.emailClicked.bind(this)} />
+          <EmailList emails={this.getEmails()} emailClicked={this.emailClicked.bind(this)} />
         </Container>
       </div>
     );
